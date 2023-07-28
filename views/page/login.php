@@ -1,3 +1,7 @@
+<?php
+    if ($_SESSION['user']) \App\Services\Router::redirect('/');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,11 +29,27 @@
 <main class="container">
     <section class="profile__section register__section">
         <h1>Вхід</h1>
+        <?php if (isset($_SESSION['message-error'])) {
+
+
+            echo '<div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast fide red show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header red">
+                    <strong class="me-auto">Повідомлення</strong>
+                </div>
+                <div class="toast-body">
+                    ' . $_SESSION['message-error'] . '
+                </div>
+            </div>
+        </div>';
+            $_SESSION['message-error'] = null;
+        }
+        ?>
         <div class="register__block">
-            <form method="post" class="needs-validation" action="" novalidate enctype="multipart/form-data">
+            <form method="post" class="needs-validation" action="/auth/login" novalidate enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email або Логін</label>
-                    <input type="text" name="email" class="form-control" id="exampleInputEmail1" required>
+                    <label for="data" class="form-label">Email або Логін</label>
+                    <input type="text" name="data" class="form-control" id="data" required>
                     <div class="invalid-feedback">
                         Будь ласка, введіть свій email або логін.
                     </div>
@@ -42,7 +62,10 @@
                     </div>
                     <div class="invalid-feedback-pass" style="color: red; margin-top: 10px;"></div>
                 </div>
-                <button type="submit" class="register__btn btn btn-success">Увійти</button>
+                <div class="login__btns">
+                    <button type="submit" class="register__btn btn btn-success">Увійти</button>
+                    <a href="/forgot-password">Забули пароль?</a>
+                </div>
             </form>
         </div>
     </section>

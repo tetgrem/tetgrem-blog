@@ -31,6 +31,7 @@
 <div class="block_404">
     <img src="https://miro.medium.com/v2/resize:fit:750/0*yDw3n0dGz2UE6HfE." alt="">
     <h1>500 - сталася помилка на сервері</h1>
+    <h2><?=$error_info?></h2>
     <a href="/">На головну</a>
 </div>
 <!-- Footer -->

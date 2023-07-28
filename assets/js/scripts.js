@@ -1,7 +1,6 @@
 // Custom Scripts
 (function () {
     'use strict'
-
     // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
     let forms = document.querySelectorAll('.needs-validation')
 
@@ -32,6 +31,31 @@ triggerTabList.forEach(triggerEl => {
 })
 
 
+
+function categoryCheck() {
+    const categoryName = document.getElementById('category_name1')
+    const categoryLink = document.getElementById('category_link1')
+    const categoryBtn = document.querySelector('.category__btn1')
+
+    categoryLink.addEventListener('keyup', () => {
+        if (categoryName.value.length > 1 && categoryLink.value.length > 1) {
+            categoryBtn.removeAttribute("disabled");
+        } else {
+            categoryBtn.setAttribute('disabled', 'true')
+        }
+    })
+    categoryName.addEventListener('keyup', () => {
+        if (categoryName.value.length > 1 && categoryLink.value.length > 1) {
+            categoryBtn.removeAttribute("disabled");
+        } else {
+            categoryBtn.setAttribute('disabled', 'true')
+        }
+    })
+}
+
+
+
+
 function passCheck() {
 
     const passInput = document.getElementById('password')
@@ -51,9 +75,11 @@ function passCheck() {
         }
     })
 
+
     passConfInput.addEventListener('keyup', () => {
         if (passConfInput.value !== passInput.value) {
             passConfFeedBack.innerHTML = `Паролі не співпадають!`
+            button.setAttribute('disabled', 'true')
         } else if (passInput.value.length > 5 && passConfInput.value.length > 5 && passConfInput.value === passInput.value) {
             passConfFeedBack.innerHTML = ``
             button.removeAttribute("disabled");
@@ -63,6 +89,13 @@ function passCheck() {
 }
 
 
+function hideMessage() {
+    const message = document.querySelector('#liveToast')
+    setTimeout(() => message.style.opacity = '0', 4000)
+    // setTimeout(() => message.style.display = 'none', 3100)
+}
+
+hideMessage();
 
 
 
