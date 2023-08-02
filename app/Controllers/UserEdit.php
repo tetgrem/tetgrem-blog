@@ -86,7 +86,7 @@ class UserEdit
 
         $_SESSION['message'] = 'Інформація успішно обновлена';
 
-        Router::redirect('/' . $username);
+        Router::redirect('/@' . $username);
 
     }
 

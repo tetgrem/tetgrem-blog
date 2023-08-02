@@ -4,7 +4,6 @@
 <nav>
     <ul class="menu">
         <li class="menu__item"><a href="/" class="menu__item-link">Головна</a></li>
-        <li class="menu__item"><a href="/todo" class="menu__item-link" style="color: #d74403">TODO</a></li>
 
         <?php if ($_SESSION['user']) { ?>
             <li class="menu__item"><a href="/my-posts" class="menu__item-link">Мої публікації</a></li>

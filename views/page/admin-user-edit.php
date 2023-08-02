@@ -87,6 +87,7 @@
                             <option value="1">Користувач</option>
                             <option value="2">Модератор</option>
                             <option value="3">Адмін</option>
+                            <option value="5">Бан</option>
                     </select>
                 </div>
 

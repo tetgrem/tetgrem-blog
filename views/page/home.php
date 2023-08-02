@@ -77,6 +77,23 @@
                 ?>
         <?php } ?>
 
+        <?php if ($_SESSION['message-error']) { ?>
+
+            <?php
+            echo '<div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast red fide show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header red">
+                    <strong class="me-auto">Повідомлення</strong>
+                </div>
+                <div class="toast-body">
+                    ' . $_SESSION['message-error'] . '
+                </div>
+            </div>
+        </div>';
+            $_SESSION['message-error'] = null;
+            ?>
+        <?php } ?>
+
         <?php if ($_SESSION['message']) { ?>
 
             <?php
@@ -105,7 +122,7 @@
                         <p><?=mb_strimwidth($el['text'], 0, 170, '...')?></p>
                         <div class="post__cat-aut">
                             <span>Категорія: <a href="/category/<?=$el['category_link']?>" class="category"><?=$el['category_name']?></a></span>
-                            <span>Автор: <b><a href="/<?=$el['username']?>"><?=$el['first_name'] . ' ' . $el['last_name']?></a> </b></span>
+                            <span>Автор: <b><a href="/@<?=$el['username']?>"><?=$el['first_name'] . ' ' . $el['last_name']?></a> </b></span>
                         </div>
                     </div>
                     <div class="post__link-date">

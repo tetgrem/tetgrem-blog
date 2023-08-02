@@ -353,6 +353,7 @@ main {
   background-color: #fff;
   border: 1px solid #E2E2E2;
   padding: 20px 30px;
+  max-width: 100%;
 
 }
 
@@ -365,6 +366,9 @@ main {
 
 .view__buttons {
   margin-top: 50px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .main__post .post__top {
@@ -523,6 +527,18 @@ main {
 
 }
 
+.ban__block {
+  position: absolute;
+  right: 15px;
+  border-radius: 1px;
+  background-color: #b40101;
+  padding: 15px;
+}
+
+.ban__block span {
+  color: white;
+}
+
 .btn-remove {
   margin-top: 10px;
 }
@@ -581,6 +597,8 @@ main {
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
+
+
 }
 
 .todo__section {
@@ -598,6 +616,8 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 
@@ -715,6 +735,7 @@ main {
   -ms-flex-align: center;
   align-items: center;
   color: black;
+
 }
 
 .view__post .another__item h2 {
@@ -755,6 +776,7 @@ main {
 
 .profile__block {
   margin-top: 50px;
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -806,8 +828,8 @@ main {
 }
 
 .admin__block .list-group-admin {
-  max-width: 35%;
-  width: 35%;
+  max-width: 350px;
+  width: 100%;
 }
 
 .admin__block .tab-content {
@@ -876,6 +898,10 @@ main {
 @media (max-width: 991.98px) {
   .container {
     max-width: 970px;
+  }
+
+  .list-group-item {
+    flex-wrap: wrap;
   }
 
   .menu {
@@ -1017,6 +1043,10 @@ main {
 
   main {
     -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  .view__post .another__item a {
     flex-wrap: wrap;
   }
 

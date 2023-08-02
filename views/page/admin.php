@@ -100,7 +100,7 @@ $users = Select::selectAllUsers();
                 <!-- Навигация -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a href="#home" class="nav-link "    aria-controls="home" role="tab" data-toggle="tab">Загальна статистика</a>
+                        <a href="#home" class="nav-link active"    aria-controls="home" role="tab" data-toggle="tab">Загальна статистика</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a href="#profile"  class="nav-link"  aria-controls="profile" role="tab" data-toggle="tab">Всі пости</a>
@@ -115,12 +115,12 @@ $users = Select::selectAllUsers();
                         <a href="#category"  class="nav-link"  aria-controls="settings" role="tab" data-toggle="tab">Категорії</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a href="#new-category"  class="nav-link active"  aria-controls="settings" role="tab" data-toggle="tab">Запропоновані категорії <span class="badge bg-primary rounded-pill"><?=$count_posts_with_second_status['COUNT(*)']?></span></a>
+                        <a href="#new-category"  class="nav-link"  aria-controls="settings" role="tab" data-toggle="tab">Запропоновані категорії <span class="badge bg-primary rounded-pill"><?=$count_posts_with_second_status['COUNT(*)']?></span></a>
                     </li>
                 </ul>
                 <!-- Содержимое вкладок -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane" id="home">
+                    <div role="tabpanel" class="tab-pane active" id="home">
                         <ul class="list-group list-group-admin">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Постів на сайті:
@@ -141,7 +141,7 @@ $users = Select::selectAllUsers();
                                     </div>
                                     <div>
                                         <span><?=$item['first_name']?> <?=$item['last_name']?> | </span>
-                                        <a href="/<?=$item['username']?>">@<?=$item['username']?></a>
+                                        <a href="/@<?=$item['username']?>">@<?=$item['username']?></a>
                                     </div>
                                     <div>
                                         <span>Статус:</span>
@@ -168,24 +168,34 @@ $users = Select::selectAllUsers();
                                         <?=$user['first_name']?> <?=$user['last_name']?>
                                     </div>
                                     <div>
-                                        <a href="/<?=$user['username']?>">@<?=$user['username']?></a>
+                                        <a href="/@<?=$user['username']?>">@<?=$user['username']?></a>
                                     </div>
                                     <div>
                                         <span>Група:</span>
                                         <?php
-                                            if ($user['user_group'] == 2) $user_group = 'Модератор';
-                                            elseif ($user['user_group'] == 3) $user_group = 'Адмін';
-                                            else $user_group = 'Користувач';
+                                        $user_group = 'Користувач';
+                                        $red = false;
+
+                                        if ($user['user_group'] == 2) {
+                                            $user_group = 'Модератор';
+                                        }
+                                        elseif ($user['user_group'] == 3) {
+                                            $user_group = 'Адмін';
+                                        }
+                                        elseif ($user['user_group'] == 5) {
+                                            $user_group = 'Забанений';
+                                            $red = true;
+                                        }
                                         ?>
-                                        <span><b><?=$user_group?></b></span>
+                                        <span style="color: <?= $red ? 'red' : 'black' ?>"><b><?= $user_group ?></b></span>
                                     </div>
                                     <div>
-                                        <span>Кількість постів</span>
+                                        <span>Кількість постів:</span>
                                         <?php $count_of_posts = UserInfo::countOfPosts($user['ids']); ?>
                                         <span><b><?=$count_of_posts?></b></span>
                                     </div>
                                     <div>
-                                        <a href="/<?=$user['username']?>">Профіль</a>
+                                        <a href="/@<?=$user['username']?>">Профіль</a>
                                     </div>
                                 </li>
                             <?php } ?>
@@ -200,7 +210,7 @@ $users = Select::selectAllUsers();
                                    </div>
                                    <div>
                                        <span><?=$item['first_name']?> <?=$item['last_name']?> | </span>
-                                       <a href="/<?=$item['username']?>">@<?=$item['username']?></a>
+                                       <a href="/@<?=$item['username']?>">@<?=$item['username']?></a>
                                    </div>
                                    <div>
                                        <span>Статус:</span>
@@ -315,7 +325,7 @@ $users = Select::selectAllUsers();
                             <button type="submit" disabled class="btn btn-success category__btn1">Добавити</button>
                         </form>
                     </div>
-                    <div role="tabpanel" class="tab-pane active" id="new-category">
+                    <div role="tabpanel" class="tab-pane" id="new-category">
                         <ul class="list-group list-group-admin-posts">
                             <?php foreach ($items_on_check as $item) { ?>
                                 <li class="list-group-item list-group-item-admin d-flex justify-content-between align-items-center">
@@ -324,7 +334,7 @@ $users = Select::selectAllUsers();
                                     </div>
                                     <div>
                                         <span><?=$item['first_name']?> <?=$item['last_name']?> | </span>
-                                        <a href="/<?=$item['username']?>">@<?=$item['username']?></a>
+                                        <a href="/@<?=$item['username']?>">@<?=$item['username']?></a>
                                     </div>
                                     <div>
                                         <span>Статус:</span>

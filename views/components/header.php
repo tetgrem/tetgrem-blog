@@ -2,7 +2,15 @@
     use App\Services\Router;
     use App\Services\UserInfo;
 
-    $user_info = UserInfo::userInfo($_SESSION['user']);
+    if ($_SESSION['user']['user_group'] == 5) {
+        Router::redirect('/ban');
+        die();
+    }
+
+
+$user_info = UserInfo::userInfo($_SESSION['user']);
+
+
 ?>
 
 <meta charset="UTF-8">

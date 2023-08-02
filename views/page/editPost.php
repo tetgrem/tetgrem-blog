@@ -87,13 +87,16 @@
 
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Статус:</label>
-                        <select id="status" name="status" class="form-select" aria-label="Default select example">
-                            <option value="1" selected>Видний</option>
-                            <option value="0" >Схований</option>
-                        </select>
-                    </div>
+                    <?php if ($_SESSION['user']['user_group'] == 2 || $_SESSION['user']['user_group'] == 3) { ?>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Статус:</label>
+                            <select id="status" name="status" class="form-select" aria-label="Default select example" required>
+                                <option value="">Статус зараз: <?php if ($el['status'] == 0) { echo 'Схований'; } elseif ($el['status'] == 1) { echo 'Видний';}?></option>
+                                <option value="1">Видний</option>
+                                <option value="0" >Схований</option>
+                            </select>
+                        </div>
+                    <?php } ?>
                     <button  type="submit" class="register__btn btn btn-success">Редагувати</button>
                 </form>
             </div>

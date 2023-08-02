@@ -3,7 +3,9 @@
     use App\Services\UserInfo;
     use App\Services\Router;
 
-    $user = $_GET['q'];
+    $user = substr($_GET['q'], 1);
+
+
 
     if ($user === $_SESSION['user']['username']) Router::redirect('/profile');
 
@@ -63,6 +65,11 @@
         }
         ?>
         <div class="profile__block">
+            <?php if ($user_page_info['group'] === 'Забанений') { ?>
+                <div class="ban__block">
+                    <span>Забанений!</span>
+                </div>
+            <?php } ?>
             <img src="<?=$user_page_info['avatar']?>" alt="avatar">
             <div class="profile__info">
                 <div class="top__item">
@@ -108,8 +115,10 @@
                        </div>
                         <?php endif; ?>
 
+                       <?php if ($_SESSION['user']['user_group'] == 3) { ?>
 
                        <a href="/admin/user-edit?user=<?=$user_array['username']?>" class="btn btn-warning" style="color: white">Редагувати</a>
+                       <?php } ?>
                        <button type="button"  class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
                            Видалити
                        </button>

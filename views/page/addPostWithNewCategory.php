@@ -67,7 +67,7 @@ $categorys = Select::selectAllCategorys();
                 </div>
                 <div class="mb-3">
                     <label for="comment" class="form-label">Добавте коментар:</label>
-                    <textarea name="comment" class="form-control" id="comment" placeholder="чому має бути добавлена саме ця категорія..." required></textarea>
+                    <textarea name="comment" class="form-control" id="comment" placeholder="чому має бути добавлена саме ця категорія... (За бажанням)"></textarea>
                     <div class="invalid-feedback">
                         Будь ласка, введіть текст.
                     </div>

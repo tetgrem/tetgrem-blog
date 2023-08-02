@@ -28,8 +28,11 @@ class UserInfo
             $group = 'Користувач';
         } elseif ($user_group == '2') {
             $group = 'Модератор';
-        } elseif ($user_group == '3'){
+        } elseif ($user_group == '3') {
             $group = 'Адмін';
+        } elseif ($user_group == '5') {
+            $group = 'Забанений';
+
         }
 
         return $group;

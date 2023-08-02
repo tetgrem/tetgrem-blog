@@ -86,6 +86,9 @@ class PostsController
         $sql = "UPDATE `posts` SET `title`='$title', `text`='$text', `category_id`='$category', {$img_sql}`status`='$status' WHERE `id`='$id'";
         mysqli_query(DB_connect::db_connect(), $sql);
 
+        if ($status == 1) {
+            mysqli_query(DB_connect::db_connect(), "DELETE FROM `posts_appeal` WHERE `posts_id`='$id'");
+        }
         $link_query = mysqli_query(DB_connect::db_connect(), "SELECT `link` FROM `posts` WHERE `id`='$id'");
         $link = mysqli_fetch_assoc($link_query);
 
@@ -99,6 +102,45 @@ class PostsController
 
         mysqli_query(DB_connect::db_connect(), "UPDATE `posts` SET `status`='0' WHERE `id`='$id'");
         $_SESSION['message-add-post'] = 'Публікація відправлена на модерацію';
+        Router::redirect('/');
+    }
+
+    public static function appeal()
+    {
+        $id = $_GET['id'];
+        $user_id = $_SESSION['user']['ids'];
+
+        $result = mysqli_query(DB_connect::db_connect(), "SELECT * FROM `posts_appeal` WHERE `posts_id` = '$id'");
+        $result = mysqli_fetch_assoc($result);
+
+        if ($result['appeal_count'] == '') {
+            $sql = "INSERT INTO `posts_appeal` (`appeal_id`, `posts_id`, `user_id`) VALUES (NULL, '$id', '$user_id')";
+
+        } else {
+
+            $check_user = mysqli_query(DB_connect::db_connect(), "SELECT * FROM `posts_appeal` WHERE `user_id`='$user_id' AND `posts_id` = '$id'");
+
+            if (mysqli_fetch_assoc($check_user) > 0) {
+                $_SESSION['message-error'] = 'Ви вже відправляли скаргу на цю публікацію';
+                Router::redirect('/');
+                die();
+            }
+
+            $sql = "INSERT INTO `posts_appeal` (`appeal_id`, `posts_id`, `user_id`) VALUES (NULL, '$id', '$user_id')";
+        }
+
+
+        mysqli_query(DB_connect::db_connect(), $sql);
+
+        $check_count_of_appeals = mysqli_query(DB_connect::db_connect(), "SELECT COUNT(*) FROM `posts_appeal` WHERE `posts_id`='$id'");
+        $check_count_of_appeals = mysqli_fetch_assoc($check_count_of_appeals);
+        $check_count_of_appeals = $check_count_of_appeals['COUNT(*)'];
+
+        if ($check_count_of_appeals == 3) {
+            mysqli_query(DB_connect::db_connect(), "UPDATE `posts` SET `status`='0' WHERE `id`='$id'");
+        }
+
+        $_SESSION['message-add-post'] = 'Скарга відправлена';
         Router::redirect('/');
     }
 }

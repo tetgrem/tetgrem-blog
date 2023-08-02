@@ -17,7 +17,7 @@
         <div class="user__info-top">
             <a href="/profile"> <img src="<?=$user_info['avatar']?>" alt="Avatar"></a>
             <div class="user__info-text">
-                <span><a href="#" style="color: #242424"><b>@<?=$_SESSION['user']['username']?></b></a></span>
+                <span><a href="/profile" style="color: #242424"><b>@<?=$_SESSION['user']['username']?></b></a></span>
                 <span>Кількість моїх постів: <b><?=$user_info['count']?></b></span>
                 <span>Група: <b><?=$user_info['group']?></b></span>
             </div>

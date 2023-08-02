@@ -89,9 +89,9 @@ if ($_SESSION['user']) \App\Services\Router::redirect('/');
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Пароль</label>
-                    <input type="password" name="password"   class="form-control" id="password" required>
+                    <input type="password" name="password"   class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" id="password" required>
                     <div class="invalid-feedback">
-                        Будь ласка, введіть пароль.
+                        Пароль має складатися з латинських букв (одна велика) та чисел. Мінімум 6 символів
                     </div>
                     <div class="invalid-feedback-pass" style="color: red; margin-top: 10px;"></div>
                 </div>
@@ -99,7 +99,7 @@ if ($_SESSION['user']) \App\Services\Router::redirect('/');
                     <label for="password_confirm" class="form-label">Підтвердження паролю</label>
                     <input type="password" name="password_confirm" class="form-control" id="password_confirm" required>
                     <div class="invalid-feedback">
-                        Будь ласка, повторіть пароль.
+                        Паролі не співпадають!
                     </div>
                     <div class="invalid-feedback-pass-conf" style="color: red; margin-top: 10px;"></div>
                 </div>

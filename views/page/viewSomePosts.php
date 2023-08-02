@@ -94,7 +94,7 @@ $items = $test['items'];
                                 <?php if ($_GET['q'] == 'my-posts') { ?>
                                    <span>Категорія: <a href="/category/<?=$el['category_link']?>" class="category"><?=$el['category_name']?></a></span>
                                 <?php } ?>
-                                <span>Автор: <b><a href="/<?=$el['username']?>"><?=$el['first_name'] . ' ' . $el['last_name']?></a> </b></span>
+                                <span>Автор: <b><a href="/@<?=$el['username']?>"><?=$el['first_name'] . ' ' . $el['last_name']?></a> </b></span>
                             </div>
                         </div>
                         <div class="post__link-date">

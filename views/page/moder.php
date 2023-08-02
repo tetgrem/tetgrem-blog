@@ -1,32 +1,32 @@
 <?php
-    if (!$_SESSION['user'] || $_SESSION['user']['user_group'] != 2) \App\Services\Router::redirect('/');
+if (!$_SESSION['user'] || $_SESSION['user']['user_group'] != 2) \App\Services\Router::redirect('/');
 
-    use App\Services\Select;
-    use App\Services\UserInfo;
-
-
-
-    $items_hidden = Select::selectAllPostsWithStatusAdmin('0');
-    $items = Select::selectAllPosts();
-
-    $items_on_check = Select::selectAllPostsWithStatusAdmin('2');
-
-    $count_all = Select::selectAllCount();
-    $count_all = mysqli_fetch_assoc($count_all);
-
-    $count_all_users = Select::selectCountOfUsers();
-    $count_all_users = mysqli_fetch_assoc($count_all_users);
-
-    $count_posts_with_zero_status = Select::selectCountOfPostsWithStatus('0');
-    $count_posts_with_zero_status = mysqli_fetch_assoc($count_posts_with_zero_status);
-
-    $count_posts_with_second_status = Select::selectCountOfPostsWithStatus('2');
-    $count_posts_with_second_status = mysqli_fetch_assoc($count_posts_with_second_status);
+use App\Services\Select;
+use App\Services\UserInfo;
 
 
-    $users = Select::selectAllUsers();
 
-    $categorys = Select::selectAllCategorys()
+$items_hidden = Select::selectAllPostsWithStatusAdmin('0');
+$items = Select::selectAllPosts();
+
+$items_on_check = Select::selectAllPostsWithStatusAdmin('2');
+
+$count_all = Select::selectAllCount();
+$count_all = mysqli_fetch_assoc($count_all);
+
+$count_all_users = Select::selectCountOfUsers();
+$count_all_users = mysqli_fetch_assoc($count_all_users);
+
+$count_posts_with_zero_status = Select::selectCountOfPostsWithStatus('0');
+$count_posts_with_zero_status = mysqli_fetch_assoc($count_posts_with_zero_status);
+
+$count_posts_with_second_status = Select::selectCountOfPostsWithStatus('2');
+$count_posts_with_second_status = mysqli_fetch_assoc($count_posts_with_second_status);
+
+
+$users = Select::selectAllUsers();
+
+$categorys = Select::selectAllCategorys()
 
 ?>
 
@@ -62,7 +62,7 @@
 <!-- Main Page -->
 <main class="container">
     <section class="profile__section">
-        <h1>Панель модератора</h1>
+        <h1>Адмін-панель</h1>
         <?php if (isset($_SESSION['message-error'])) {
 
 
@@ -100,7 +100,7 @@
                 <!-- Навигация -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a href="#home" class="nav-link "    aria-controls="home" role="tab" data-toggle="tab">Загальна статистика</a>
+                        <a href="#home" class="nav-link active"    aria-controls="home" role="tab" data-toggle="tab">Загальна статистика</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a href="#profile"  class="nav-link"  aria-controls="profile" role="tab" data-toggle="tab">Всі пости</a>
@@ -115,12 +115,12 @@
                         <a href="#category"  class="nav-link"  aria-controls="settings" role="tab" data-toggle="tab">Категорії</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a href="#new-category"  class="nav-link active"  aria-controls="settings" role="tab" data-toggle="tab">Запропоновані категорії <span class="badge bg-primary rounded-pill"><?=$count_posts_with_second_status['COUNT(*)']?></span></a>
+                        <a href="#new-category"  class="nav-link"  aria-controls="settings" role="tab" data-toggle="tab">Запропоновані категорії <span class="badge bg-primary rounded-pill"><?=$count_posts_with_second_status['COUNT(*)']?></span></a>
                     </li>
                 </ul>
                 <!-- Содержимое вкладок -->
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane" id="home">
+                    <div role="tabpanel" class="tab-pane active" id="home">
                         <ul class="list-group list-group-admin">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Постів на сайті:
@@ -141,7 +141,7 @@
                                     </div>
                                     <div>
                                         <span><?=$item['first_name']?> <?=$item['last_name']?> | </span>
-                                        <a href="/<?=$item['username']?>">@<?=$item['username']?></a>
+                                        <a href="/@<?=$item['username']?>">@<?=$item['username']?></a>
                                     </div>
                                     <div>
                                         <span>Статус:</span>
@@ -168,24 +168,34 @@
                                         <?=$user['first_name']?> <?=$user['last_name']?>
                                     </div>
                                     <div>
-                                        <a href="/<?=$user['username']?>">@<?=$user['username']?></a>
+                                        <a href="/@<?=$user['username']?>">@<?=$user['username']?></a>
                                     </div>
                                     <div>
                                         <span>Група:</span>
                                         <?php
-                                        if ($user['user_group'] == 2) $user_group = 'Модератор';
-                                        elseif ($user['user_group'] == 3) $user_group = 'Адмін';
-                                        else $user_group = 'Користувач';
+                                        $user_group = 'Користувач';
+                                        $red = false;
+
+                                        if ($user['user_group'] == 2) {
+                                            $user_group = 'Модератор';
+                                        }
+                                        elseif ($user['user_group'] == 3) {
+                                            $user_group = 'Адмін';
+                                        }
+                                        elseif ($user['user_group'] == 5) {
+                                            $user_group = 'Забанений';
+                                            $red = true;
+                                        }
                                         ?>
-                                        <span><b><?=$user_group?></b></span>
+                                        <span style="color: <?= $red ? 'red' : 'black' ?>"><b><?= $user_group ?></b></span>
                                     </div>
                                     <div>
-                                        <span>Кількість постів</span>
+                                        <span>Кількість постів:</span>
                                         <?php $count_of_posts = UserInfo::countOfPosts($user['ids']); ?>
                                         <span><b><?=$count_of_posts?></b></span>
                                     </div>
                                     <div>
-                                        <a href="/<?=$user['username']?>">Профіль</a>
+                                        <a href="/@<?=$user['username']?>">Профіль</a>
                                     </div>
                                 </li>
                             <?php } ?>
@@ -200,7 +210,7 @@
                                     </div>
                                     <div>
                                         <span><?=$item['first_name']?> <?=$item['last_name']?> | </span>
-                                        <a href="/<?=$item['username']?>">@<?=$item['username']?></a>
+                                        <a href="/@<?=$item['username']?>">@<?=$item['username']?></a>
                                     </div>
                                     <div>
                                         <span>Статус:</span>
@@ -226,7 +236,7 @@
                                 </div>
                                 <div class="category__con"></div>
                                 <div class="category__btns">
-                                    <button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#<?php echo $category['category_link']?>">
+                                    <button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#<?php echo $category['category_id']?>">
                                         Редагувати
                                     </button>
 
@@ -235,7 +245,7 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Редагування категорії: <?=$category['category_id']?></h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Редагування категорії: <?=$category['category_name']?></h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -315,7 +325,7 @@
                             <button type="submit" disabled class="btn btn-success category__btn1">Добавити</button>
                         </form>
                     </div>
-                    <div role="tabpanel" class="tab-pane active" id="new-category">
+                    <div role="tabpanel" class="tab-pane" id="new-category">
                         <ul class="list-group list-group-admin-posts">
                             <?php foreach ($items_on_check as $item) { ?>
                                 <li class="list-group-item list-group-item-admin d-flex justify-content-between align-items-center">
@@ -324,7 +334,7 @@
                                     </div>
                                     <div>
                                         <span><?=$item['first_name']?> <?=$item['last_name']?> | </span>
-                                        <a href="/<?=$item['username']?>">@<?=$item['username']?></a>
+                                        <a href="/@<?=$item['username']?>">@<?=$item['username']?></a>
                                     </div>
                                     <div>
                                         <span>Статус:</span>

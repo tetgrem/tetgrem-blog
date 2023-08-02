@@ -14,7 +14,7 @@ use App\Controllers\NewCategoryController;
 $users = Select::selectUsersLinks();
 
 foreach ($users as $el) {
-    Router::page('/' . $el['username'], 'user-page', $el['first_name'] . ' ' . $el['last_name']);
+    Router::page('/@' . $el['username'], 'user-page', $el['first_name'] . ' ' . $el['last_name']);
 }
 
 
@@ -54,6 +54,8 @@ Router::page('/register-end', 'register-end', 'Підтвердження Email'
 Router::page('/user-edit', 'user-edit', 'Редагування профілю');
 Router::page('/admin/user-edit', 'admin-user-edit', 'Редагування користувача');
 
+Router::page('/ban', 'ban', 'Ви забанені!');
+
 Router::post('/auth/register', Auth::class, 'register', true, true);
 Router::post('/auth/login', Auth::class, 'login', true);
 Router::post('/auth/logout', Auth::class, 'logout');
@@ -69,6 +71,8 @@ Router::post('/posts/add-post', PostsController::class, 'addPost', true, true);
 Router::post('/posts/deletePost', PostsController::class, 'deletePost');
 Router::post('/posts/editPost', PostsController::class, 'editPost', true, true);
 Router::post('/posts/moderation', PostsController::class, 'moderation');
+
+Router::post('/posts/appeal', PostsController::class, 'appeal');
 
 Router::post('/posts/add-post-new-category', NewCategoryController::class, 'proposedCategory', true, true);
 Router::post('/posts/add-post-and-new-category', NewCategoryController::class, 'addProposedCategory');
